@@ -54,7 +54,7 @@ try {
                 Select-Object TimeCreated, Id, LevelDisplayName, ProviderName, Message
         }
         { $_ -in 'Ping', 'TCP' } {
-            if ([string]::IsNullOrWhiteSpace($TargetHost) -or $TargetHost -notmatch '^[a-zA-Z0-9][a-zA-Z0-9._:%-]*$') {
+            if ([string]::IsNullOrWhiteSpace($TargetHost) -or $TargetHost -notmatch '^[a-zA-Z0-9:][a-zA-Z0-9._:%-]*$') {
                 throw 'Indicar -TargetHost con un hostname o IP válido.'
             }
             if ($Action -eq 'Ping') {
