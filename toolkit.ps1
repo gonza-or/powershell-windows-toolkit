@@ -53,17 +53,19 @@ try {
             Get-WinEvent -FilterHashtable @{LogName='System'; Level=2,3} -MaxEvents $Count |
                 Select-Object TimeCreated, Id, LevelDisplayName, ProviderName, Message
         }
-        { $_ -in 'Ping', 'TCP' } {
+        'Ping' {
             if ([string]::IsNullOrWhiteSpace($TargetHost) -or $TargetHost -notmatch '^[a-zA-Z0-9:][a-zA-Z0-9._:%-]*$') {
                 throw 'Indicá un hostname o IP válido.'
             }
-            if ($Action -eq 'Ping') {
-                Test-Connection -ComputerName $TargetHost -Count 4
-            } else {
-                $result = Test-NetConnection -ComputerName $TargetHost -Port $Port -WarningAction SilentlyContinue
-                $result | Select-Object ComputerName, RemoteAddress, RemotePort, TcpTestSucceeded
-                if (-not $result.TcpTestSucceeded) { exit 1 }
+            Test-Connection -ComputerName $TargetHost -Count 4
+        }
+        'TCP' {
+            if ([string]::IsNullOrWhiteSpace($TargetHost) -or $TargetHost -notmatch '^[a-zA-Z0-9:][a-zA-Z0-9._:%-]*$') {
+                throw 'Indicá un hostname o IP válido.'
             }
+            $result = Test-NetConnection -ComputerName $TargetHost -Port $Port -WarningAction SilentlyContinue
+            $result | Select-Object ComputerName, RemoteAddress, RemotePort, TcpTestSucceeded
+            if (-not $result.TcpTestSucceeded) { exit 1 }
         }
     }
 } catch {
