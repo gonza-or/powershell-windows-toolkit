@@ -33,4 +33,4 @@ Parámetros tipados, validación de entrada, objetos y pipelines, consultas CIM,
 
 ## Validación
 
-El entorno de construcción es Linux: no se afirma que las consultas hayan sido ejecutadas en Windows. Ver [validación pendiente en Windows](../../docs/verification.md) antes de presentar resultados de ese sistema.
+El entorno de construcción es Linux: no se afirma que las consultas hayan sido ejecutadas en Windows. Ejecutar los ejemplos en una máquina Windows antes de presentar resultados de ese sistema.
