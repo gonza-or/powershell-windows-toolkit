@@ -12,7 +12,7 @@ param(
 $ErrorActionPreference = 'Stop'
 
 if ($env:OS -ne 'Windows_NT') {
-    Write-Error 'Este toolkit necesita Windows y sus cmdlets de diagnóstico.'
+    Write-Error 'Sólo funciona en Windows.'
     exit 1
 }
 
@@ -55,7 +55,7 @@ try {
         }
         { $_ -in 'Ping', 'TCP' } {
             if ([string]::IsNullOrWhiteSpace($TargetHost) -or $TargetHost -notmatch '^[a-zA-Z0-9:][a-zA-Z0-9._:%-]*$') {
-                throw 'Indicar -TargetHost con un hostname o IP válido.'
+                throw 'Indicá un hostname o IP válido.'
             }
             if ($Action -eq 'Ping') {
                 Test-Connection -ComputerName $TargetHost -Count 4
@@ -67,6 +67,6 @@ try {
         }
     }
 } catch {
-    Write-Error "No se pudo completar la consulta: $($_.Exception.Message)" -ErrorAction Continue
+    Write-Error "Error: $($_.Exception.Message)" -ErrorAction Continue
     exit 1
 }

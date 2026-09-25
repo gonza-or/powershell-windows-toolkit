@@ -1,14 +1,15 @@
 # PowerShell Windows Toolkit
 
-Herramienta de consulta para diagnóstico básico de Windows, mediante PowerShell, CIM y cmdlets del sistema. No instala servicios ni modifica configuraciones.
+Script de PowerShell para consultar información básica de Windows.
 
-## Requisitos e instalación
+Muestra equipo, versión de Windows, CPU, memoria, discos, red, IP, procesos, servicios y eventos. También permite probar ping y TCP. No cambia configuraciones.
 
-Windows 10/11 con Windows PowerShell 5.1 o PowerShell 7 y módulos de Windows `NetAdapter`, `NetTCPIP`, `CimCmdlets` y `Microsoft.PowerShell.Diagnostics` disponibles. Abrir PowerShell en esta carpeta después de descargar el repositorio.
+## Requisitos
 
-Si Windows bloquea el script descargado, primero leerlo y comprobar su procedencia. Se puede desbloquear sólo este archivo con `Unblock-File .\toolkit.ps1`. Las políticas organizacionales pueden impedir ejecutarlo; no se propone desactivarlas ni usar `Bypass`. Las consultas habituales no requieren administrador; los permisos de eventos dependen del equipo.
+- Windows 10 u 11
+- Windows PowerShell 5.1 o PowerShell 7
 
-## Uso y ejemplos
+## Uso
 
 ```powershell
 .\toolkit.ps1 -Action System
@@ -25,12 +26,6 @@ Si Windows bloquea el script descargado, primero leerlo y comprobar su procedenc
 .\toolkit.ps1 -Action TCP -TargetHost localhost -Port 80
 ```
 
-Sin argumentos consulta el equipo. `Events` muestra errores y advertencias del registro System; si no encuentra eventos coincidentes, informa el error que devuelve Windows. `Disks` incluye discos lógicos locales. La conexión TCP requiere que exista un servicio escuchando; el ejemplo de puerto 80 puede fallar si no hay servidor web. Los errores de consulta y las conexiones TCP fallidas devuelven salida 1. `Test-NetConnection` puede demorar según los tiempos de espera de Windows.
+Sin `-Action` consulta el equipo. `Events` revisa errores y advertencias del registro `System`.
 
-## Qué demuestra
-
-Parámetros tipados, validación de entrada, objetos y pipelines, consultas CIM, memoria y discos, adaptadores e IP, procesos, servicios y eventos. Permite distinguir una falla de conectividad de un servicio que no escucha.
-
-## Validación
-
-El entorno de construcción es Linux: no se afirma que las consultas hayan sido ejecutadas en Windows. Ejecutar los ejemplos en una máquina Windows antes de presentar resultados de ese sistema.
+El script se revisó en Linux pero necesita Windows para ejecutarse. Las conexiones TCP fallidas terminan con código 1.
